@@ -17,18 +17,26 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.8"
-          
-      - name: Install Dependencies
-        run: pipenv install
+
+      - name: Install Pipenv
+        run: pip install pipenv
         
       - name: Format with Black
-        run: pipenv run black --diff --color
+        run: |
+          pipenv install --dev
+          pipenv run black --diff --color
         
       - name: Check Spelling with Codespell
-        run: pipenv run codespell
+        run: |
+          pipenv install --dev
+          pipenv run codespell
         
       - name: Lint with Flake8
-        run: pipenv run flake8 --count --max-complexity=10 --max-line-length=127 --show-source --statistics
+        run: |
+          pipenv install --dev
+          pipenv run flake8 --count --max-complexity=10 --max-line-length=127 --show-source --statistics
         
       - name: Test with PyTest
-        run: pipenv run pytest .
+        run: |
+          pipenv install --dev
+          pipenv run pytest .
