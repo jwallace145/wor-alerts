@@ -28,7 +28,7 @@ jobs:
         run: pipenv run codespell
         
       - name: Lint with Flake8
-        run: pipenv run flake8 . --count --max-complexity=10 --max-line-length=127 --show-source --statistics
+        run: pipenv run flake8 --count --max-complexity=10 --max-line-length=127 --show-source --statistics
         
       - name: Test with PyTest
         run: pipenv run pytest .
