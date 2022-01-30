@@ -24,7 +24,7 @@ jobs:
       - name: Format with Black
         run: |
           pipenv install --dev
-          pipenv run black --diff --color
+          pipenv run black .
         
       - name: Check Spelling with Codespell
         run: |
