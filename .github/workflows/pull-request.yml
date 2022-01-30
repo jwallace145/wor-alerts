@@ -40,8 +40,6 @@ jobs:
         run: |
           pipenv install --dev
           pipenv run pytest tests --cov=src --cov-report xml
-      
-          - name: Code Coverage Summary Report
 
       - name: Generate Code Coverage Summary
         uses: irongut/CodeCoverageSummary@v1.2.0
