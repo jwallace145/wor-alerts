@@ -1,4 +1,15 @@
+import boto3
+import moto
 import pytest
+
+AWS_REGION = "us-east-1"
+
+
+@pytest.fixture
+def mock_sns():
+    mock_sns = moto.mock_sns()
+    mock_sns.start()
+    return boto3.client("sns", region_name=AWS_REGION)
 
 
 @pytest.fixture

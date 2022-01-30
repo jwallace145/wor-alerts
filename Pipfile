@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 coloredlogs = "*"
+boto3 = "*"
 
 [dev-packages]
 black = "*"
@@ -15,6 +16,7 @@ codespell = "*"
 pytest = "*"
 pytest-cov = "*"
 mock = "*"
+moto = "*"
 
 [requires]
 python_version = "3.8"
