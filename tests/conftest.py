@@ -6,6 +6,13 @@ AWS_REGION = "us-east-1"
 
 
 @pytest.fixture
+def mock_s3():
+    mock_s3 = moto.mock_s3()
+    mock_s3.start()
+    return boto3.client("s3")
+
+
+@pytest.fixture
 def mock_sns():
     mock_sns = moto.mock_sns()
     mock_sns.start()
