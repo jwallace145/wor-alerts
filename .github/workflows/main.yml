@@ -30,7 +30,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: WolfOfRobinhood
-          role: ${{ secrets.AWS_LAMBDA_ROLE_ARN }}
-          runtime: python3.8
-          handler: lambda.lambda_handler
           zip_file: WolfOfRobinhood.zip
