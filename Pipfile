@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+requests = "*"
+coloredlogs = "*"
 
 [dev-packages]
 black = "*"
@@ -12,6 +14,7 @@ flake8 = "*"
 codespell = "*"
 pytest = "*"
 pytest-cov = "*"
+mock = "*"
 
 [requires]
 python_version = "3.8"

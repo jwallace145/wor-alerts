@@ -21,7 +21,7 @@ repos:
       - id: flake8 # linter
         name: flake8
         description: "Flake8: Your tool for style guide enforcement"
-        entry: pipenv run flake8
+        entry: pipenv run flake8 --ignore E501
         language: python
         types: [ python ]
 
