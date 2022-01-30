@@ -1,0 +1,34 @@
+name: Format, Lint, and Unit Test PRs
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+          
+      - name: Install Dependencies
+        run: pipenv install
+        
+      - name: Format with Black
+        run: pipenv run black --diff --color
+        
+      - name: Check Spelling with Codespell
+        run: pipenv run codespell
+        
+      - name: Lint with Flake8
+        run: pipenv run flake8 . --count --max-complexity=10 --max-line-length=127 --show-source --statistics
+        
+      - name: Test with PyTest
+        run: pipenv run pytest .
