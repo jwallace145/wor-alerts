@@ -1,5 +1,5 @@
-import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
+from typing import Dict
 
 import requests
 
@@ -17,21 +17,20 @@ class YFApiController:
 
     api_key: str
 
-    def get_stock_quote(self, symbol: str) -> StockQuote:
-        log.info(f"Getting stock quote for symbol {symbol}.....")
+    def get_stock_quotes(self, symbols: str) -> Dict[str, StockQuote]:
+        log.info(f"Getting stock quotes for symbols {symbols.split(sep=',')}.....")
         response = requests.request(
             "GET",
             f"{BASE_URL}{GET_STOCK_QUOTE}",
             headers={"x-api-key": self.api_key},
-            params={"symbols": symbol},
-        ).json()["quoteResponse"]["result"][0]
-        stock_quote = StockQuote(
-            symbol=symbol,
-            name=response["displayName"],
-            currency=response["currency"],
-            market_price=response["regularMarketPrice"],
-        )
-        log.info(
-            f"Stock quote for symbol {symbol}:\n{json.dumps(asdict(stock_quote), indent=4)}"
-        )
-        return stock_quote
+            params={"symbols": symbols},
+        ).json()["quoteResponse"]["result"]
+        stock_quotes = {}
+        for quote in response:
+            stock_quotes[quote["symbol"]] = StockQuote(
+                symbol=quote["symbol"],
+                name=quote["displayName"],
+                currency=quote["currency"],
+                market_price=quote["regularMarketPrice"],
+            )
+        return stock_quotes
