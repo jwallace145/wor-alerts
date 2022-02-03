@@ -1,14 +1,14 @@
 import os
 from dataclasses import dataclass
 
-from boto3 import Session
+from mypy_boto3_sns import SNSClient
 from src.gateways.clients import sns
 
 
 @dataclass
 class SnsGateway:
 
-    client: Session = sns
+    client: SNSClient = sns
     topic_arn: str = os.getenv("AWS_TOPIC_ARN")
 
     def publish_message(self, message: str) -> None:

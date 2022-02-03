@@ -12,11 +12,12 @@ class TestYFApiController:
 
     @patch("src.yf_api_controller.requests.models.Response.json")
     @patch("src.yf_api_controller.requests.request", return_value=Response())
-    def test_get_stock_quote(self, mock_request, mock_json, yf_api_msft_stock_quote):
+    def test_get_stock_quotes(self, mock_request, mock_json, yf_api_msft_stock_quote):
         mock_json.return_value = yf_api_msft_stock_quote
-        stock_quote = self.yf_api.get_stock_quote(symbol="MSFT")
-        assert isinstance(stock_quote, StockQuote)
-        assert stock_quote.symbol == "MSFT"
-        assert stock_quote.name == "Microsoft"
-        assert stock_quote.currency == "USD"
-        assert stock_quote.market_price == 308.26
+        stock_quotes = self.yf_api.get_stock_quotes(symbols=set("MSFT"))
+        assert isinstance(stock_quotes, dict)
+        assert isinstance(stock_quotes["MSFT"], StockQuote)
+        assert stock_quotes["MSFT"].symbol == "MSFT"
+        assert stock_quotes["MSFT"].name == "Microsoft"
+        assert stock_quotes["MSFT"].currency == "USD"
+        assert stock_quotes["MSFT"].market_price == 308.26
