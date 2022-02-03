@@ -37,7 +37,7 @@ class Actualizer:
                     msg = (
                         f"Hello, {user.email}!\n\n"
                         f"Wolf of Robinhood has detected that your stock {strike_price.symbol} has breached the buy price you set of ${strike_price.buy_price}."
-                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of {market_price}.\n\n"
+                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of ${market_price}.\n\n"
                         f"Thanks and have a great day!\n"
                         f"The Wolf of Robinhood Team"
                     )
@@ -49,7 +49,7 @@ class Actualizer:
                     msg = (
                         f"Hello, {user.email}!\n\n"
                         f"Wolf of Robinhood has detected that your stock {strike_price.symbol} has breached the sell price you set of ${strike_price.sell_price}."
-                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of {market_price}.\n\n"
+                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of ${market_price}.\n\n"
                         f"Thanks and have a great day!\n"
                         f"The Wolf of Robinhood Team"
                     )

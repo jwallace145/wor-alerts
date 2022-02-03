@@ -3,3 +3,4 @@ coverage.xml
 *.sh
 .coverage
 **/__pycache__/**
+test_local.py # .py file to test lambda function locally
