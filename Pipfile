@@ -21,6 +21,7 @@ pytest = "*"
 pytest-cov = "*"
 mock = "*"
 moto = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.8"
