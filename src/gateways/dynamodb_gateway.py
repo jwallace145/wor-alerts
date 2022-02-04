@@ -10,16 +10,12 @@ from src.utils.logger import Logger
 
 log = Logger(__name__).get_logger()
 
-STRIKE_PRICES_TABLE_NAME = "wor-strike-prices"
-
 
 @dataclass
 class DynamoDbGateway:
 
     client: DynamoDBClient = dynamodb
-    strike_prices_table: str = os.getenv(
-        "STRIKE_PRICES_TABLE_NAME", STRIKE_PRICES_TABLE_NAME
-    )
+    strike_prices_table: str = os.getenv("STRIKE_PRICES_TABLE_NAME")
 
     def get_users(self) -> List[User]:
         items = self.client.scan(TableName=self.strike_prices_table)["Items"]
