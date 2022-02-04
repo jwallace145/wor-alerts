@@ -1,4 +1,4 @@
-name: Format, Lint, and Unit Test PRs
+name: Format, Lint, Unit Test PRs and Deploy to Dev
 
 on:
   pull_request:
@@ -59,3 +59,15 @@ jobs:
         with:
           recreate: true
           path: code-coverage-results.md
+
+      - name: Zip Source Code
+        run: zip -r wolf-of-robinhood-dev.zip ./ -x 'tests/*';
+      
+      - name: Deploy to Dev
+        uses: appleboy/lambda-action@v0.1.5
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: wolf-of-robinhood-dev
+          zip_file: wolf-of-robinhood-dev.zip
