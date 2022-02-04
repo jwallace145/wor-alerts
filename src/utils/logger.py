@@ -1,9 +1,11 @@
 import os
 import sys
 from dataclasses import dataclass
-from logging import Formatter, Handler, Logger, StreamHandler, getLogger
+from logging import FileHandler, Formatter, Handler, Logger, StreamHandler, getLogger
 
 import coloredlogs
+
+LOG_FILE = "logs.log"
 
 
 @dataclass
@@ -21,10 +23,17 @@ class Logger:
         console_handler.setFormatter(self.formatter)
         return console_handler
 
+    def _get_file_handler(self, filename: str) -> Handler:
+        file_handler = FileHandler(filename, mode="a+")
+        file_handler.setLevel(self.log_level)
+        file_handler.setFormatter(self.formatter)
+        return file_handler
+
     def get_logger(self) -> Logger:
         logger = getLogger(self.name)
         logger.setLevel(self.log_level)
         logger.addHandler(self._get_console_handler())
+        logger.addHandler(self._get_file_handler(filename=LOG_FILE))
         coloredlogs.install(
             fmt="%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s",
             level=self.log_level,

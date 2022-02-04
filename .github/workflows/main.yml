@@ -19,7 +19,7 @@ jobs:
           python-version: '3.8'
           
       - name: Zip Source Code
-        run: zip -r WolfOfRobinhood.zip ./ -x 'tests/*';
+        run: zip -r wolf-of-robinhood-prod.zip ./ -x 'tests/*';
 
       - name: Deploy to AWS Lambda
         uses: appleboy/lambda-action@v0.1.5
@@ -27,5 +27,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: WolfOfRobinhood
-          zip_file: WolfOfRobinhood.zip
+          function_name: wolf-of-robinhood-prod
+          zip_file: wolf-of-robinhood-prod.zip
