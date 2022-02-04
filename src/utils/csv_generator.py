@@ -10,7 +10,7 @@ from src.models.user import User
 class CsvGenerator:
 
     file_name: str = "data.csv"
-    working_dir: str = "./"
+    working_dir: str = "/tmp/"
 
     def generate_csv(
         self, users: List[User], stock_quotes: Dict[str, StockQuote]

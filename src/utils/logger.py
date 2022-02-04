@@ -5,7 +5,7 @@ from logging import FileHandler, Formatter, Handler, Logger, StreamHandler, getL
 
 import coloredlogs
 
-LOG_FILE = "logs.log"
+LOG_FILE = "/tmp/logs.log"
 
 
 @dataclass
