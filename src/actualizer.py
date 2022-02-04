@@ -63,8 +63,8 @@ class Actualizer:
         self, users: List[User], stock_quotes: Dict[str, StockQuote]
     ) -> None:
         self.csv_generator.generate_csv(users, stock_quotes)
-        self.s3_gateway.upload_file(file_name="data.csv", key="data.csv")
-        self.s3_gateway.upload_file(file_name="logs.log", key="logs.log")
+        self.s3_gateway.upload_file(file_name="/tmp/data.csv", key="data.csv")
+        self.s3_gateway.upload_file(file_name="/tmp/logs.log", key="logs.log")
 
     @staticmethod
     def _get_symbols(users: List[User]) -> Set[str]:
