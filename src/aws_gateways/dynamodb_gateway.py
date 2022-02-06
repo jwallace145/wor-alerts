@@ -26,7 +26,7 @@ class DynamoDbGateway:
                 email=item["email"]["S"], phone_number=item["phone_number"]["S"]
             )
             log.info(
-                f"Creating user with email {user.email} and phone number {user.phone_number}....."
+                f"Getting user with email {user.email} and phone number {user.phone_number}....."
             )
             for item in item["strike_prices"]["L"]:
                 strike_price = StrikePrice(
@@ -36,7 +36,7 @@ class DynamoDbGateway:
                 )
                 user.strike_prices.append(strike_price)
                 log.info(
-                    f"Adding stock {strike_price.symbol} with buy price {strike_price.buy_price} and sell price {strike_price.sell_price} to user with email {user.email}....."
+                    f"Getting stock {strike_price.symbol} with buy price {strike_price.buy_price} and sell price {strike_price.sell_price} for user with email {user.email}....."
                 )
             users.append(user)
         return users
