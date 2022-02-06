@@ -1,5 +1,5 @@
 import pytest
-from src.gateways.dynamodb_gateway import DynamoDbGateway
+from src.aws_gateways.dynamodb_gateway import DynamoDbGateway
 from mypy_boto3_dynamodb import DynamoDBClient
 from src.models.user import User
 

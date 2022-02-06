@@ -2,7 +2,7 @@ import os
 from dataclasses import dataclass
 
 from mypy_boto3_sns import SNSClient
-from src.gateways.clients import sns
+from src.aws_gateways.clients import sns
 
 
 @dataclass

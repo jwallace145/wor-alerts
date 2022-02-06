@@ -1,11 +1,12 @@
 import json
 
+import os
 from src.actualizer import Actualizer
 
 
 def lambda_handler(event, context):
     # create actualizer
-    actualizer = Actualizer()
+    actualizer = Actualizer(logs_working_dir=os.getenv("LOGS_WORKING_DIR"))
 
     # get users from database
     users = actualizer.get_users()

@@ -34,6 +34,11 @@ class YFApiController:
                 name=item["displayName"],
                 currency=item["currency"],
                 market_price=item["regularMarketPrice"],
+                trailing_pe=item.get("trailingPE", "N/A"),
+                forward_pe=item.get("forwardPE", "N/A"),
+                eps_current_year=item.get("epsCurrentYear", "N/A"),
+                eps_forward=item.get("epsForward", "N/A"),
+                eps_trailing_twelve_months=item.get("epsTrailingTwelveMonths", "N/A"),
             )
             stock_quotes[item["symbol"]] = stock_quote
         log.info(

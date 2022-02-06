@@ -6,3 +6,4 @@ coverage.xml
 test_local.py
 data.csv
 logs.log
+tests/testdata.csv

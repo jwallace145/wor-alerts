@@ -1,6 +1,9 @@
 import boto3
 import moto
 import pytest
+from src.models.stock_quote import StockQuote
+from src.models.strike_price import StrikePrice
+from src.models.user import User
 
 AWS_REGION = "us-east-1"
 
@@ -24,6 +27,36 @@ def mock_sns():
     mock_sns = moto.mock_sns()
     mock_sns.start()
     return boto3.client("sns", region_name=AWS_REGION)
+
+
+@pytest.fixture
+def mock_users():
+    return [
+        User(
+            email="testuser1@gmail.com",
+            phone_number="0123456789",
+            strike_prices=[
+                StrikePrice(symbol="MSFT", buy_price=300.00, sell_price=350.00)
+            ],
+        )
+    ]
+
+
+@pytest.fixture
+def mock_stock_quotes_dict():
+    return {
+        "MSFT": StockQuote(
+            symbol="MSFT",
+            name="Microsoft",
+            currency="USD",
+            market_price=305.94,
+            trailing_pe=32.58494,
+            forward_pe=28.459536,
+            eps_current_year=9.34,
+            eps_forward=10.75,
+            eps_trailing_twelve_months=9.389,
+        )
+    }
 
 
 @pytest.fixture

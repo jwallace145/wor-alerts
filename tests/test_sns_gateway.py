@@ -1,5 +1,5 @@
 import pytest
-from src.gateways.sns_gateway import SnsGateway
+from src.aws_gateways.sns_gateway import SnsGateway
 
 
 class TestSnsGateway:

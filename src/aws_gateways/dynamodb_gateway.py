@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import List
 
 from mypy_boto3_dynamodb import DynamoDBClient
-from src.gateways.clients import dynamodb
+from src.aws_gateways.clients import dynamodb
 from src.models.strike_price import StrikePrice
 from src.models.user import User
 from src.utils.logger import Logger
@@ -18,6 +18,7 @@ class DynamoDbGateway:
     strike_prices_table: str = os.getenv("STRIKE_PRICES_TABLE_NAME")
 
     def get_users(self) -> List[User]:
+        log.info(self.strike_prices_table)
         items = self.client.scan(TableName=self.strike_prices_table)["Items"]
         users = []
         for item in items:
