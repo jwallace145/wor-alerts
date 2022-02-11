@@ -11,6 +11,7 @@ boto3-stubs = "*"
 mypy-boto3-dynamodb = "*"
 mypy-boto3-s3 = "*"
 mypy-boto3-sns = "*"
+tabulate = "*"
 
 [dev-packages]
 black = "*"

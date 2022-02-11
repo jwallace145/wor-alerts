@@ -18,7 +18,6 @@ class DynamoDbGateway:
     strike_prices_table: str = os.getenv("STRIKE_PRICES_TABLE_NAME")
 
     def get_users(self) -> List[User]:
-        log.info(self.strike_prices_table)
         items = self.client.scan(TableName=self.strike_prices_table)["Items"]
         users = []
         for item in items:

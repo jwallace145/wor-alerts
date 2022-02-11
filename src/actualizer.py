@@ -10,6 +10,7 @@ from src.models.user import User
 from src.utils.csv_generator import CsvGenerator
 from src.utils.logger import Logger
 from src.yahoo_finance.yf_api_controller import YFApiController
+from src.models.alert import Alert
 
 log = Logger(__name__).get_logger()
 
@@ -34,32 +35,24 @@ class Actualizer:
         self, users: List[User], stock_quotes: Dict[str, StockQuote]
     ) -> None:
         for user in users:
+            alert_strike_prices = []
+            alert_stock_quotes = []
             for strike_price in user.strike_prices:
                 market_price = stock_quotes[strike_price.symbol].market_price
-                if strike_price.buy_price > market_price:
-                    log.info(
-                        f"Sending buy alert message for stock {strike_price.symbol} to email {user.email} and phone number {user.phone_number}"
-                    )
-                    msg = (
-                        f"Hello, {user.email}!\n\n"
-                        f"Wolf of Robinhood has detected that your stock {strike_price.symbol} has breached the buy price you set of ${strike_price.buy_price}."
-                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of ${market_price}.\n\n"
-                        f"Thanks and have a great day!\n"
-                        f"The Wolf of Robinhood Team"
-                    )
-                    self.sns_gateway.publish_message(message=msg)
-                elif strike_price.sell_price < market_price:
-                    log.info(
-                        f"Sending sell alert message for stock {strike_price.symbol} to email {user.email} and phone number {user.phone_number}"
-                    )
-                    msg = (
-                        f"Hello, {user.email}!\n\n"
-                        f"Wolf of Robinhood has detected that your stock {strike_price.symbol} has breached the sell price you set of ${strike_price.sell_price}."
-                        f" During the last Wolf of Robinhood query, stock {strike_price.symbol} had a market price of ${market_price}.\n\n"
-                        f"Thanks and have a great day!\n"
-                        f"The Wolf of Robinhood Team"
-                    )
-                    self.sns_gateway.publish_message(message=msg)
+                if (
+                    strike_price.buy_price > market_price
+                    or strike_price.sell_price < market_price
+                ):
+                    alert_strike_prices.append(strike_price)
+                    alert_stock_quotes.append(stock_quotes[strike_price.symbol])
+            if len(alert_strike_prices) > 0:
+                self.sns_gateway.publish_message(
+                    message=Alert(
+                        user_email=user.email,
+                        strike_prices=alert_strike_prices,
+                        stock_quotes=alert_stock_quotes,
+                    ).generate_alert_message()
+                )
 
     def write_digest_to_s3_bucket(
         self, users: List[User], stock_quotes: Dict[str, StockQuote]
