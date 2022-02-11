@@ -6,7 +6,7 @@ run:
 	pipenv run python test_local.py
 
 lint:
-	pipenv run flake8 --count --max-complexity=10 --max-line-length=127 --show-source --statistics --ignore=E501
+	pipenv run flake8 --count --max-complexity=10 --max-line-length=127 --show-source --statistics --ignore=E501,W503
 
 format:
 	pipenv run black .
