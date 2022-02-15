@@ -23,6 +23,13 @@ def mock_s3():
 
 
 @pytest.fixture
+def mock_ses():
+    mock_ses = moto.mock_ses()
+    mock_ses.start()
+    return boto3.client("ses", region_name=AWS_REGION)
+
+
+@pytest.fixture
 def mock_sns():
     mock_sns = moto.mock_sns()
     mock_sns.start()
@@ -40,6 +47,31 @@ def mock_users():
             ],
         )
     ]
+
+
+@pytest.fixture
+def mock_user():
+    return User(email="testuser@gmail.com", phone_number="0123456789")
+
+
+@pytest.fixture
+def mock_strike_price():
+    return StrikePrice(symbol="MSFT", buy_price=200.00, sell_price=300.00)
+
+
+@pytest.fixture
+def mock_stock_quote():
+    return StockQuote(
+        symbol="MSFT",
+        name="Microsoft",
+        currency="USD",
+        market_price=310.00,
+        trailing_pe=1,
+        forward_pe=1,
+        eps_current_year=1,
+        eps_forward=1,
+        eps_trailing_twelve_months=1,
+    )
 
 
 @pytest.fixture

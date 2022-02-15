@@ -52,10 +52,20 @@ class SesGateway:
     ) -> str:
         user_str = '{ "user": { "email": "%s" },' % user.email
         strike_prices_str = ' "strike_prices": ['
-        for i, strike_price in enumerate(strike_prices):
+        for i, stock in enumerate(zip(strike_prices, stock_quotes)):
             strike_prices_str += (
-                ' { "symbol": "%s", "buy_price": %f, "sell_price": %f }'
-                % (strike_price.symbol, strike_price.buy_price, strike_price.sell_price)
+                ' { "symbol": "%s", "buy_price": %.2f, "sell_price": %.2f, "market_price": %.2f, "trailing_pe": %.2f, "forward_pe": %.2f, "eps_current_year": %.2f, "eps_forward": %.2f, "eps_trailing_twelve_months": %.2f}'
+                % (
+                    stock[0].symbol,
+                    stock[0].buy_price,
+                    stock[0].sell_price,
+                    stock[1].market_price,
+                    stock[1].trailing_pe,
+                    stock[1].forward_pe,
+                    stock[1].eps_current_year,
+                    stock[1].eps_forward,
+                    stock[1].eps_trailing_twelve_months,
+                )
             )
             if i != len(strike_prices) - 1:
                 strike_prices_str += ","
