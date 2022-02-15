@@ -4,13 +4,12 @@ from datetime import datetime
 
 from src.aws_gateways.dynamodb_gateway import DynamoDbGateway
 from src.aws_gateways.s3_gateway import S3Gateway
-from src.aws_gateways.sns_gateway import SnsGateway
 from src.models.stock_quote import StockQuote
 from src.models.user import User
 from src.utils.csv_generator import CsvGenerator
 from src.utils.logger import Logger
 from src.yahoo_finance.yf_api_controller import YFApiController
-from src.models.alert import Alert
+from src.aws_gateways.ses_gateway import SesGateway
 
 log = Logger(__name__).get_logger()
 
@@ -22,7 +21,7 @@ class Actualizer:
     yf_api: YFApiController = YFApiController()
     dynamodb_gateway: DynamoDbGateway = DynamoDbGateway()
     s3_gateway: S3Gateway = S3Gateway()
-    sns_gateway: SnsGateway = SnsGateway()
+    ses_gateway: SesGateway = SesGateway()
     csv_generator: CsvGenerator = CsvGenerator()
 
     def get_users(self) -> List[User]:
@@ -46,12 +45,11 @@ class Actualizer:
                     alert_strike_prices.append(strike_price)
                     alert_stock_quotes.append(stock_quotes[strike_price.symbol])
             if len(alert_strike_prices) > 0:
-                self.sns_gateway.publish_message(
-                    message=Alert(
-                        user_email=user.email,
-                        strike_prices=alert_strike_prices,
-                        stock_quotes=alert_stock_quotes,
-                    ).generate_alert_message()
+                log.info(f"sending alert message to {user.email}")
+                self.ses_gateway.send_email(
+                    user=user,
+                    strike_prices=alert_strike_prices,
+                    stock_quotes=alert_stock_quotes,
                 )
 
     def write_digest_to_s3_bucket(

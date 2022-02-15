@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Wolf of Robinhood Alert!</h1>
+
+    <p>Hello {{user.email}}, Wolf of Robinhood has detected a breach in your buy/sell price criteria during our last
+        query of your watched stocks. Below is a table of the digest.</p>
+
+    <table>
+        <tr>
+            <th>Stock</th>
+            <th>Buy Price</th>
+            <th>Sell Price</th>
+            <th>Market Price</th>
+            <th>Trailing PE</th>
+            <th>Forward PE</th>
+            <th>EPS Current Year</th>
+            <th>EPS Forward</th>
+            <th>EPS Trailing 12 Months</th>
+        </tr>
+        {{#each strike_prices}}
+        <tr>
+            <td>{{symbol}}</td>
+            <td>{{buy_price}}</td>
+            <td>{{sell_price}}</td>
+            <td>{{market_price}}</td>
+            <td>{{trailing_pe}}</td>
+            <td>{{forward_pe}}</td>
+            <td>{{eps_current_year}}</td>
+            <td>{{eps_forward}}</td>
+            <td>{{eps_trailing_twelve_months}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <p1>Best,</p1>
+    <br>
+    <p1>The Wolf of Robinhood Team</p1>
+</body>
+
+
+</html>
